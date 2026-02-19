@@ -69,6 +69,80 @@ class garage_owner{
 };
 
 
+//--------------------------------CAR CLASS------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+class car{
+    private:
+        string brand;
+        string model;
+        int year;
+        bool is_available;
+        string registration_number;
+        string color;
+        static int total_cars;
+        friend class garage_owner;
+        friend class customer;
+    public:
+        car(){
+           model = "empty";
+           brand = "empty";
+           year = 0;
+           is_available = false;
+          // cout << "Default Constructor." << endl;
+        }
+        car(string b , string m , int y , bool f , string r , string c){
+            brand = b;
+            model = m;
+            year = y;
+            is_available = f;
+            registration_number = r;
+            color = c;
+           // cout << "Parameterized Constructor." << endl;
+        }
+        static void fill_details(car c[]){
+
+            c[0] = car("Honda","Civic",2020,true,"LEH-991","Red");
+            total_cars++;
+            c[1] = car("Audi","A6",2022,true,"AUU-1567","White");
+            total_cars++;
+            c[2] = car("Kia","Sportage",2021,true,"ABC-123","Black");
+            total_cars++;
+            c[3] = car("Honda","Reborn",2021,true,"AU-1298","Grey");
+            total_cars++;
+            c[4] = car("Honda","City",2017,true,"ACB-098","Taffeta");
+            total_cars++;
+            c[5] = car("Toyota","Camry",2018,true,"MKL-1354","Light Blue");
+            total_cars++;
+            c[6] = car("Toyota","Grande",2022,true,"UHJ-3321","Silver");
+            total_cars++;
+            c[7] = car("Toyota","Corolla",2015,true,"LEE-3827","Red");
+            total_cars++;
+        }
+        void print_car(){
+            cout << endl << brand << " " << model << " " << year << " " << registration_number << " " << color << endl;
+        }
+        static void main_menu(int& a){
+            cout << endl << "            GREETINGS !!!     " << endl << endl;
+            cout << " Press 1 if you are the Owner of The Garage." << endl;
+            cout << " Press 2 if you are some sort of a Customer." << endl;
+            do{
+                cout << "Enter Choice : ";
+                cin >> a;
+            }while(a != 1 && a != 2);
+        }
+        static int get_total_cars(){
+            return total_cars;
+        }
+
+        ~car(){
+            // DESTRUCTOR
+        }
+};
+
+
+
+
+
 
 //---------------------FUNCTIONS OF CLASS DEFINED OUTSIDE CLASS----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
