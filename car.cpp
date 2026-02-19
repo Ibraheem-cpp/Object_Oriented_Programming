@@ -141,6 +141,139 @@ class car{
 
 
 
+//-------------------------------------CUSTOMER CLASS---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+class customer{
+    private:
+        static const int max_garage_capacity = 3;
+        int current_cars = 0;
+        car owned_cars[max_garage_capacity];
+        friend class garage_owner;
+        friend class car;
+    public:
+    customer(){
+        owned_cars[0] = car("BMW","M5",2018,true,"LUA-7548","Matte Black");
+        current_cars++;
+    }
+    void customer_menu(int& choice){
+        cout << endl << "           Welcome, to The Black Knight Garage." << endl << endl;
+        cout << " What do you Wish To Do ? " << endl;
+        cout << "1. Buy a Car." << endl;
+        cout << "2. Sell a Car." << endl;
+        cout << "3. Repair a Car." << endl;
+        cout << "4. See Owned Cars." << endl;
+        cout << "5. See all Cars in the Garage." << endl;
+        do{
+            cout << "Enter Choice : ";
+            cin >> choice;
+            if(choice < 0 || choice > 5){cout << " Invalid Choice." << endl;}
+        }while(choice < 0 || choice > 5);
+        cout << endl;
+    }
+    void see_owned_cars(){
+        cout << "Cars Owned By You : " << endl << endl;
+            cout << "    Brand " << " Model " << " Year " << " Reg# " << " Color " << endl;
+            cout << "-----------------------------------------" << endl;
+            for(int i=0;i<current_cars;i++){
+               
+                if(owned_cars[i].is_available == true){
+                    cout << "    " << owned_cars[i].brand << "  " << owned_cars[i].model << "  " << owned_cars[i].year << "  " << owned_cars[i].registration_number << 
+                    "  " << owned_cars[i].color << endl << endl;
+                }
+            }
+    }
+    void repair_car(){
+        string n;
+        bool found = false;
+        int j;
+        cin.ignore();
+        cout << "Enter The Registration Number of the car you want to repair : ";
+        getline(cin,n);
+        cout << endl;
+        for(int i=0;i<current_cars;i++){
+            if(n==owned_cars[i].registration_number){
+                j = i;
+                found = true;
+                break;
+            }
+        }
+        if(found == true){
+            cout << owned_cars[j].brand << " " << owned_cars[j].model << " has been Repaired Successfully.\n\n";
+            cout << "Thanks for Choosing Black Knight Garage. :)\n";
+        }
+        else{
+            cout << "Car Not Found.\n";
+            return;
+        }
+    }
+    void buy_new_car(car c[]){
+        
+        if(current_cars == max_garage_capacity){cout << "Garage is Full." << endl; return;}
+        else{
+            string r;
+            cin.ignore();
+            cout << "Enter The Registration Number of the car you want to Purchase : ";
+            getline(cin,r);
+            for(int i=0;i<car::total_cars;i++){
+                if(r == c[i].registration_number){
+                   owned_cars[current_cars] = car(c[i].brand,c[i].model,c[i].year,true,c[i].registration_number,c[i].color);
+                   current_cars++;
+                   c[i].is_available = false;
+                   cout << endl << "Car Bought Successfully." << endl;
+                   cout << endl << "Thanks for choosing Black Knight Garage. :) " << endl;
+                   return;
+                }
+            }
+            cout << "Car not Found." << endl;
+        }
+    }
+    void sell_a_car(car c[]){
+        if(current_cars < 1){cout << "Your Garage is Empty." << endl; return;}
+        else if(car::total_cars == max_cars_in_garage){
+            cout << "Sorry, Black Knight Garage is Full Right Now." << endl; return;
+        }
+        else{
+            string r;
+            int j;
+            cin.ignore();
+            cout << "Enter The Registration Number of Car You Want to sell : ";
+            getline(cin,r);
+             for(int i=0;i<current_cars;i++){
+                if(r == owned_cars[i].registration_number){
+                    j = i;
+                    break;
+                }
+             }
+
+            for(int i=0;i<car::total_cars;i++){
+                if(r == c[i].registration_number){
+                    c[i].is_available = true;
+                    owned_cars[j].is_available = false;
+                    current_cars--;
+                    cout << endl << "Car Sold Successfully." << endl;
+                    cout << endl << "Thanks for Choosing Black Knight Garage. :) " << endl;
+                    return;
+                }
+            }
+
+            c[car::total_cars] = car(owned_cars[j].brand,owned_cars[j].model,owned_cars[j].year,true,owned_cars[j].registration_number,owned_cars[j].color);
+            owned_cars[j].is_available = false;
+            current_cars--;
+            cout << endl << "Car Sold Successfully." << endl;
+            cout << endl << "Thanks for Choosing Black Knight Garage. :) " << endl;
+            car::total_cars++;
+           
+            return;
+            
+        }
+    }
+
+    ~customer(){
+        // DESTRUCTOR
+    }
+};
+
+
 
 
 
